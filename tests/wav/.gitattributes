@@ -1,0 +1,3 @@
+football_chant.wav filter=lfs diff=lfs merge=lfs -text
+industrial.wav filter=lfs diff=lfs merge=lfs -text
+microtonal.wav filter=lfs diff=lfs merge=lfs -text
