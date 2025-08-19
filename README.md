@@ -1,6 +1,6 @@
-## CLAP Audio Captioning (CLI & Web)
+## clapety-clap 👏 (Audio Tagging CLI & Web)
 
-Tools (CLI + FastAPI web UI) that use the CLAP model to embed audio and rank a fixed vocabulary of semantic tags, producing a comma‑separated pseudo caption (top‑K tags).
+clapety-clap 👏 is a lightweight CLI + FastAPI web UI using the CLAP model to embed audio and rank a fixed vocabulary of semantic tags, producing a comma‑separated pseudo caption (top‑K tags).
 
 ### Install / Sync (uv)
 

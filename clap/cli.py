@@ -20,7 +20,7 @@ from .core import (
 console = Console(stderr=True)
 
 
-@click.group(help="CLAP audio captioning utilities")
+@click.group(help="clapety-clap 👏 audio tag ranking utilities (CLAP-based)")
 @click.version_option()
 def cli():  # pragma: no cover
     pass
