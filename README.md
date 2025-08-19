@@ -81,4 +81,25 @@ Example:
 
 ```
 curl -F file=@tests/fixtures/loop.wav -F top_k=5 http://127.0.0.1:8000/api/caption
+
+### Rust Implementation
+
+A Rust prototype lives under `clapety-clap-rs/` (part of a Cargo workspace at the repo root). It uses a placeholder embedding backend for now.
+
+Build & run on a fixture:
+
+```
+
+cargo run -p clapety-clap -- tests/fixtures/loop.wav --top-k 5 --json
+
+```
+
+Run Rust tests:
+
+```
+
+cargo test -p clapety-clap
+
+```
+
 ```
