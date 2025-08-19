@@ -1,7 +1,6 @@
 use clap::Parser;
 use clapety_clap::{DummyBackend, EmbeddingBackend, InferenceConfig, TagInferencer};
 use colored::*;
-use std::io::{self, Write};
 use serde_json;
 use std::path::PathBuf;
 
