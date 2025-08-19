@@ -1,4 +1,5 @@
 """Core CLAP tag inference utilities shared by CLI and web server."""
+
 from __future__ import annotations
 
 import pathlib
@@ -34,7 +35,9 @@ DEFAULT_TAGS = [
 try:  # pragma: no cover
     from transformers import ClapProcessor, ClapModel  # type: ignore
 except Exception as e:  # pragma: no cover
-    raise RuntimeError("transformers with CLAP support is required: pip install transformers") from e
+    raise RuntimeError(
+        "transformers with CLAP support is required: pip install transformers"
+    ) from e
 
 
 @lru_cache(maxsize=2)
@@ -44,7 +47,9 @@ def load_model(model_name: str = MODEL_REPO_DEFAULT):  # pragma: no cover (heavy
     return processor, model
 
 
-def compute_clap_tags(audio_path: pathlib.Path, processor, model, tags: List[str], top_k: int) -> List[str]:
+def compute_clap_tags(
+    audio_path: pathlib.Path, processor, model, tags: List[str], top_k: int
+) -> List[str]:
     import librosa  # defer heavy deps
     import torch
 

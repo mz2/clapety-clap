@@ -1,4 +1,5 @@
 """FastAPI server exposing CLAP tag inference plus simple web UI."""
+
 from __future__ import annotations
 
 import os
