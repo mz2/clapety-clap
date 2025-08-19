@@ -12,10 +12,14 @@ dependencies = [
     "soundfile>=0.12.0",
     "click>=8.0.0",
     "rich>=13.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.23.0",
+    "python-multipart>=0.0.9",
 ]
 
 [project.scripts]
 clap = "clap.cli:main"
+clap-server = "clap.server:main"
 
 [tool.setuptools]
 package-dir = { "" = "." }
@@ -25,6 +29,7 @@ where = ["."]
 
 [project.optional-dependencies]
 test = ["pytest>=7.0.0"]
+web = ["fastapi>=0.110.0", "uvicorn>=0.23.0", "python-multipart>=0.0.9"]
 
 # uv-specific dependency groups (uv will read these). Mirrors optional deps for conventional tooling.
 [dependency-groups]

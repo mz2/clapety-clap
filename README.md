@@ -1,6 +1,6 @@
-## CLAP Audio Captioning CLI
+## CLAP Audio Captioning (CLI & Web)
 
-CLI that uses the CLAP model to embed audio and rank a set of semantic tags, producing a comma‑separated pseudo caption (top‑K tags).
+Tools (CLI + FastAPI web UI) that use the CLAP model to embed audio and rank a fixed vocabulary of semantic tags, producing a comma‑separated pseudo caption (top‑K tags).
 
 ### Install / Sync (uv)
 
@@ -19,15 +19,12 @@ uv sync
 
 ```
 uv run clap caption path/to/audio.wav
+```
 
 If you ever see `Failed to spawn: clap` after changing packaging config, re-run `uv sync`. As a fallback you can also invoke via module:
 
 ```
-
 uv run python -m clap.cli caption path/to/audio.wav
-
-```
-
 ```
 
 Editable development (auto-reload your local package) is already handled by uv using the workspace source; no extra `-e` flag is required.
@@ -60,4 +57,28 @@ uv run clap caption samples/*.wav --no-table
 
 ### Notes
 
-Captions are the top‑K ranked tags (default 3) chosen from a default vocabulary (`DEFAULT_TAGS` in `clap/cli.py`). Provide a custom tag list with `--tags-file` or change K with `--top-k`. For natural language generation you would need a generative audio captioning model rather than CLAP's contrastive embedding.
+Captions are the top‑K ranked tags (default 3) chosen from a default vocabulary (`DEFAULT_TAGS` in `clap/core.py`). Adjust K with `--top-k`. For natural language sentence generation you'd use a generative captioning model; CLAP provides contrastive embeddings for ranking.
+
+### Web Server
+
+Start server (serves API + static UI):
+
+```
+uv run clap-server
+```
+
+Open http://127.0.0.1:8000 and drag & drop an audio file. Inference starts automatically.
+
+API endpoint:
+
+```
+POST /api/caption
+Form: file=<audio>, top_k (int, optional), model_name (str, optional)
+Returns JSON: {"caption", "tags": [...], "model", "filename", "top_k"}
+```
+
+Example:
+
+```
+curl -F file=@tests/fixtures/loop.wav -F top_k=5 http://127.0.0.1:8000/api/caption
+```
