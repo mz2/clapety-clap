@@ -1,6 +1,6 @@
 ## CLAP Audio Captioning CLI
 
-Prototype CLI wrapping a (placeholder) CLAP-like audio captioning model.
+CLI that uses the CLAP model to embed audio and rank a set of semantic tags, producing a comma‑separated pseudo caption (top‑K tags).
 
 ### Install / Sync (uv)
 
@@ -19,13 +19,19 @@ uv sync
 
 ```
 uv run clap caption path/to/audio.wav
+
+If you ever see `Failed to spawn: clap` after changing packaging config, re-run `uv sync`. As a fallback you can also invoke via module:
+
+```
+uv run python -m clap.cli caption path/to/audio.wav
+```
 ```
 
 Editable development (auto-reload your local package) is already handled by uv using the workspace source; no extra `-e` flag is required.
 
 ### Usage
 
-Caption a single file:
+Caption a single file (prints JSON to stdout, table to stderr):
 
 ```
 uv run clap caption path/to/audio.wav
@@ -51,4 +57,4 @@ uv run clap caption samples/*.wav --no-table
 
 ### Notes
 
-Current caption generation is a placeholder that echoes the filename. Replace `caption_audio_file` in `clap/cli.py` with real CLAP model inference logic (feature extraction + generation / decoding).
+Captions are the top‑K ranked tags (default 3) chosen from a default vocabulary (`DEFAULT_TAGS` in `clap/cli.py`). Provide a custom tag list with `--tags-file` or change K with `--top-k`. For natural language generation you would need a generative audio captioning model rather than CLAP's contrastive embedding.
