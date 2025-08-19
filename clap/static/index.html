@@ -9,9 +9,8 @@
   
   <style>
   :root { --bg:#0f1115; --bg-alt:#161a21; --border:#2a303b; --text:#e6ecf3; --text-dim:#9aa4b1; --accent:#4f8cff; --accent-grad:linear-gradient(135deg,#4f8cff,#8950ff 60%); --radius:14px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color-scheme:dark light; }
-  /* Light theme override (applied via .light class OR user system preference) */
+  /* Light theme override (manual). Root always defines dark to allow reliable toggling. */
   body.light { --bg:#f6f7f9; --bg-alt:#ffffff; --border:#dbe1e8; --text:#1d2125; --text-dim:#5c6773; }
-  @media (prefers-color-scheme: light){ :root { --bg:#f6f7f9; --bg-alt:#ffffff; --border:#dbe1e8; --text:#1d2125; --text-dim:#5c6773; } }
     body { background:var(--bg); color:var(--text); margin:0; font-family:system-ui,'Inter','Segoe UI',Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
     .page { max-width:1040px; margin:0 auto; padding:clamp(1.2rem,2vw,2.4rem); }
     header { display:flex; flex-wrap:wrap; gap:1.5rem; align-items:flex-end; }
@@ -110,11 +109,21 @@
 
     // Theme handling with persistence
     const storedTheme = localStorage.getItem('clap_theme');
-    if(storedTheme === 'light') document.body.classList.add('light');
+    if(storedTheme === 'light') {
+      document.body.classList.add('light');
+    } else if(storedTheme === 'dark') {
+      document.body.classList.remove('light');
+    } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      // respect system preference only on first visit (no stored theme yet)
+      document.body.classList.add('light');
+    }
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('light');
       localStorage.setItem('clap_theme', document.body.classList.contains('light') ? 'light' : 'dark');
+      themeToggle.textContent = document.body.classList.contains('light') ? 'DARK' : 'LIGHT';
     });
+    // initialize button label to next action
+    themeToggle.textContent = document.body.classList.contains('light') ? 'DARK' : 'LIGHT';
 
     ;['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); }));
     ;['dragleave','drop'].forEach(evt=>dropzone.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag'); }));
