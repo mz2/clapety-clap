@@ -23,8 +23,11 @@ uv run clap caption path/to/audio.wav
 If you ever see `Failed to spawn: clap` after changing packaging config, re-run `uv sync`. As a fallback you can also invoke via module:
 
 ```
+
 uv run python -m clap.cli caption path/to/audio.wav
+
 ```
+
 ```
 
 Editable development (auto-reload your local package) is already handled by uv using the workspace source; no extra `-e` flag is required.
